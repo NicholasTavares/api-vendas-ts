@@ -45,8 +45,6 @@ class SendForGotPasswordEmailService {
       return
     }
 
-    
-
     await EtherealMail.sendMail({
       to: {
         name: user.name,

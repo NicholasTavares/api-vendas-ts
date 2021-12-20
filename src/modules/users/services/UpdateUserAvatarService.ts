@@ -15,7 +15,6 @@ interface IRequest {
 
 class UpdateUserAvatarService {
   public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
-    console.log("DADOS", user_id, avatarFileName )
     const usersRepository = getCustomRepository(UsersRepository)
 
     const user = await usersRepository.findById(user_id)
@@ -25,20 +24,19 @@ class UpdateUserAvatarService {
     }
 
     if (uploadConfig.driver === 's3') {
-      const s3Provider = new S3StorageProvider()
+      const s3Provider = new S3StorageProvider();
       if (user.avatar) {
-        await s3Provider.deleteFile(user.avatar)
+        await s3Provider.deleteFile(user.avatar);
       }
-
-      const filename = await s3Provider.saveFile(avatarFileName)
-      user.avatar = filename
+      const filename = await s3Provider.saveFile(avatarFileName);
+      user.avatar = filename;
     } else {
-      const storageProvider = new DiskStorageProvider()
+      const diskProvider = new DiskStorageProvider();
       if (user.avatar) {
-        await storageProvider.deleteFile(user.avatar)
+        await diskProvider.deleteFile(user.avatar);
       }
-      const filename = await storageProvider.saveFile(avatarFileName)
-      user.avatar = filename
+      const filename = await diskProvider.saveFile(avatarFileName);
+      user.avatar = filename;
     }
 
     await usersRepository.save(user)

@@ -20,7 +20,7 @@ app.use(rateLimiter)
 
 app.use(pagination)
 
-app.use('/files', express.static(uploadConfig.diretory))
+app.use('/files', express.static(uploadConfig.directory))
 app.use(routes)
 
 app.use(errors())
