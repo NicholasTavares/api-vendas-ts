@@ -6,9 +6,10 @@ import Customer from "../entities/Customer";
 
 
 class CustomersRepository implements ICustomersRepository {
-  private ormRepository: Repository<Customer>
+  private ormRepository: Repository<Customer>;
+
   constructor() {
-    this.ormRepository = getRepository(Customer)
+    this.ormRepository = getRepository(Customer);
   }
 
   public async create({ name, email }: ICreateCustomer): Promise<Customer> {
